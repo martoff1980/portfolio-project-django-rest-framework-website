@@ -16,12 +16,12 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     
-    # Сторонние библиотеки
+    # Django REST Framework and JWT authentication 
     "rest_framework",
     "rest_framework_simplejwt",
     "drf_spectacular",
     
-    # Локальные приложения проекта
+    # Local apps
     "user",
     "train_station",
     "orders",
