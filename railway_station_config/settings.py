@@ -1,10 +1,12 @@
 import os
 from datetime import timedelta
 from pathlib import Path
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ... (SECRET_KEY, DEBUG, ALLOWED_HOSTS оставляем стандартными или берем из os.environ)
+SECRET_KEY = config("DJANGO_SECRET_KEY")
 
 # Регистрация приложений
 INSTALLED_APPS = [
