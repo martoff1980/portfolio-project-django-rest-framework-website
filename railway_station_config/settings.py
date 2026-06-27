@@ -58,6 +58,10 @@ AUTH_USER_MODEL = "user.User"
 # Настройка подключения к базе данных (PostgreSQL с фолбеком на SQLite для тестов)
 DB_HOST = os.environ.get("DB_HOST")
 
+# Исключить предустановленное значение для поля автоинкремента в моделях Django,
+# чтобы использовать BigAutoField по умолчанию.
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 if DB_HOST:
     DATABASES = {
         "default": {
@@ -74,7 +78,7 @@ else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "String": os.path.join(BASE_DIR, "db.sqlite3"),
+            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
         }
     }
 
