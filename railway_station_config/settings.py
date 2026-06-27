@@ -7,6 +7,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config("DJANGO_SECRET_KEY")
 
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
 # Регистрация приложений
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -51,6 +54,8 @@ TEMPLATES = [
         },
     },
 ]
+
+ROOT_URLCONF = "railway_station_config.urls"
 
 # Указываем Django использовать нашу кастомную модель пользователя
 AUTH_USER_MODEL = "user.User"
@@ -110,3 +115,5 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
 }
+
+STATIC_URL = "static/"

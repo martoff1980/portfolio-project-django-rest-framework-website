@@ -6,8 +6,8 @@ from rest_framework_simplejwt.views import (
 )
 # Импорты для Swagger (drf-spectacular — современный стандарт для DRF)
 from drf_spectacular.views import (
-    DrfSpectacularAPIView,
-    DrfSpectacularSwaggerView,
+    SpectacularAPIView,
+    SpectacularSwaggerView,
 )
 
 urlpatterns = [
@@ -22,6 +22,6 @@ urlpatterns = [
     path("api/user/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     
     # Автоматическая документация API (Swagger)
-    path("api/schema/", DrfSpectacularAPIView.as_view(), name="schema"),
-    path("api/schema/swagger-ui/", DrfSpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("api/schema/swagger-ui/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
 ]
