@@ -1,5 +1,7 @@
 from django.db.models import F, Count
+
 from rest_framework import viewsets
+from rest_framework.permissions import IsAdminUser, IsAuthenticatedOrReadOnly
 
 from train_station.models import Crew, TrainType, Station, Route, Train, Journey
 from train_station import serializers
@@ -31,6 +33,14 @@ class TrainTypeViewSet(viewsets.ModelViewSet):
 class StationViewSet(viewsets.ModelViewSet):
     queryset = Station.objects.all()
     serializer_class = serializers.StationSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,) 
+    # Свойство IsAuthenticatedOrReadOnly в сочетании с глобальными настройками 
+    # или явная проверка на Admin при записи обеспечит нужный уровень безопасности.
+    
+    def get_permissions(self):
+        if self.action in ("create", "update", "partial_update", "destroy"):
+            return [IsAdminUser()]
+        return [IsAuthenticatedOrReadOnly()]
 
 
 class RouteViewSet(viewsets.ModelViewSet):
