@@ -12,47 +12,44 @@ class TicketSerializer(serializers.ModelSerializer):
         fields = ("id", "cargo", "seat", "journey")
 
     def validate(self, attrs):
-        """
-        Валидация: проверяем, что выбранный вагон и место существуют в поезде,
-        и что они не заняты (дополнительная проверка к unique_together).
-        """
+        """Validation: Check that the selected cargo and seat exist in the train, and that they are not already booked (additional check to unique_together)."""
         data = super().validate(attrs)
         journey = attrs["journey"]
         train = journey.train
 
-        # 1. Проверка существования вагона
+        # Checking if the cargo number is valid for the given train. The cargo number must be between 1 and the total number of cargos in the train.
         if attrs["cargo"] > train.cargo_num or attrs["cargo"] < 1:
             raise ValidationError(
                 {"cargo": f"В этом поезде всего {train.cargo_num} вагонов(а)."}
             )
 
-        # 2. Проверка существования места в вагоне
+        # Checking if the seat number is valid for the given cargo. The seat number must be between 1 and the number of seats in the cargo.
         if attrs["seat"] > train.places_in_cargo or attrs["seat"] < 1:
             raise ValidationError(
-                {"seat": f"В каждом вагоне всего {train.places_in_cargo} мест(а)."}
+                {"seat":f"In each cargo, there are only {train.places_in_cargo} seats."}
             )
 
-        # 3. Проверка занятости места на уровне бизнес-логики (для понятной ошибки)
-        # UniqueTogetherValidator от DRF сработает автоматически, но ручной фильтр дает красивый JSON ошибки
+        # Chacking if the seat is already booked for the given journey, cargo, and seat.
+        # UniqueTogetherValidator from DRF will trigger automatically, but the manual filter provides a nicer JSON error message.
         if Ticket.objects.filter(
             journey=journey, 
             cargo=attrs["cargo"], 
             seat=attrs["seat"]
         ).exists():
             raise ValidationError(
-                "Это место уже забронировано другим пассажиром."
+                "This seat is already booked by another passenger. Please choose a different seat."
             )
 
         return data
 
 
 class TicketListSerializer(TicketSerializer):
-    """Используется для вывода билетов внутри деталей заказа"""
+    """Used for displaying tickets within order details"""
     journey = JourneyListSerializer(read_only=True)
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    # Заказ создается вместе со списком билетов (Writable Nested Serializer)
+    # Order is created along with a list of tickets (Writable Nested Serializer)
     tickets = TicketSerializer(many=True, allow_empty=False)
 
     class Meta:
@@ -60,10 +57,7 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ("id", "tickets", "created_at")
 
     def create(self, validated_data):
-        """
-        Кастомный метод создания, так как мы используем вложенные билеты.
-        Оборачивание в транзакцию atomic будет происходить во ViewSet.
-        """
+        """Custom create method to handle nested ticket creation. The atomic transaction is handled in the ViewSet."""
         tickets_data = validated_data.pop("tickets")
         order = Order.objects.create(**validated_data)
         
@@ -71,11 +65,11 @@ class OrderSerializer(serializers.ModelSerializer):
             for ticket_data in tickets_data:
                 Ticket.objects.create(order=order, **ticket_data)
         except IntegrityError:
-            raise ValidationError("Одно из выбранных мест уже занято. Попробуйте еще раз.")
+            raise ValidationError("Selected seat is already taken. Please try again.")
             
         return order
 
 
 class OrderListSerializer(OrderSerializer):
-    """Для красивого просмотра истории заказов пользователя"""
+    """Read-only serializer for listing orders with their tickets and journeys."""
     tickets = TicketListSerializer(many=True, read_only=True)

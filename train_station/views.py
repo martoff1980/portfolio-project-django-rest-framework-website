@@ -70,10 +70,11 @@ class JourneyViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = self.queryset
 
-        # Оптимизация запросов для разных экшенов
+        # Optimization of queries for different actions
         if self.action == "list":
-            # Считаем количество доступных мест на уровне базы данных:
-            # Общее количество мест = (кол-во вагонов * мест в вагоне) - кол-во купленных билетов
+            # Counting tickets for each journey and calculating available seats
+            # Total seats = (number of cargo cars * seats in cargo)
+            # - number of purchased tickets
             total_places = F("train__cargo_num") * F("train__places_in_cargo")
             queryset = (
                 queryset
@@ -88,30 +89,22 @@ class JourneyViewSet(viewsets.ModelViewSet):
                 "train__train_type"
             ).prefetch_related("crew", "tickets")
 
-        # 1. Фильтр по ID маршрута (?route=2)
+        # Filtering journeys by route ID if provided in query parameters
         route_id = self.request.query_params.get("route")
         if route_id:
             queryset = queryset.filter(route_id=route_id)
 
-        # 2. Фильтр по станции отправления (?source=Kyiv)
+        # Filtering journeys by source station name if provided in query parameters
         source_station = self.request.query_params.get("source")
         if source_station:
             queryset = queryset.filter(route__source__name__icontains=source_station)
 
-        # 3. Фильтр по станции прибытия (?destination=Lviv)
+        # Filtering journeys by destination station name if provided in query parameters
         destination_station = self.request.query_params.get("destination")
         if destination_station:
             queryset = queryset.filter(route__destination__name__icontains=destination_station)
         return queryset.order_by("departure_time")
 
-        date_str = self.request.query_params.get("date")
-        if date_str:
-            try:
-                date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
-                queryset = queryset.filter(departure_time__date=date_obj)
-            except ValueError:
-                pass  # Игнорируем неверный формат даты
-        
 
     def get_serializer_class(self):
         if self.action == "list":

@@ -6,7 +6,7 @@ from train_station.models import Journey
 
 class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
-    # Используем встроенную модель User через settings.AUTH_USER_MODEL
+    # Using the built-in User model via settings.AUTH_USER_MODEL
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
         on_delete=models.CASCADE, 
@@ -35,7 +35,7 @@ class Ticket(models.Model):
     )
 
     class Meta:
-        # Уникальное ограничение: нельзя забронировать то же место в том же вагоне на тот же рейс
+        # Unique constraint: cannot book the same seat in the same cargo for the same journey
         unique_together = ("journey", "cargo", "seat")
         ordering = ["cargo", "seat"]
 

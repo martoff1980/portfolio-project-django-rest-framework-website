@@ -6,7 +6,7 @@ from django.db import models
 
 
 class UserManager(BaseUserManager):
-    """Менеджер для кастомной модели пользователя, где email является уникальным идентификатором"""
+    """Manager for users where email is the unique identifiers for authentication instead of usernames."""
     use_in_migrations = True
 
     def _create_user(self, email, password, **extra_fields):

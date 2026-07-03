@@ -42,13 +42,13 @@ class TrainAdmin(admin.ModelAdmin):
 class JourneyAdmin(admin.ModelAdmin):
     list_display = ("id", "route", "train", "departure_time", "arrival_time")
     list_display_links = ("id", "route")
-    # Удобная фильтрация по времени отправления и конкретным маршрутам
+    # Filters for departure time and route for easy filtering in the admin interface
     list_filter = ("departure_time", "route")
-    # Позволяет искать рейсы по названиям станций или имени поезда
+    # Find journeys by source station name, destination station name, or train name
     search_fields = (
         "route__source__name", 
         "route__destination__name", 
         "train__name"
     )
-    # Горизонтальный интерфейс для выбора нескольких членов экипажа (ManyToManyField)
+    # Horizontal interface for selecting multiple crew members (ManyToManyField)
     filter_horizontal = ("crew",)

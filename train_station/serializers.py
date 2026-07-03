@@ -21,7 +21,7 @@ class StationSerializer(serializers.ModelSerializer):
         fields = ("id", "name", "latitude", "longitude")
 
 
-# Сериализаторы для Route
+# Serializer for Route model
 class RouteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Route
@@ -29,12 +29,12 @@ class RouteSerializer(serializers.ModelSerializer):
 
 
 class RouteListCellSerializer(RouteSerializer):
-    """Используется для красивого отображения маршрутов списком"""
+    """Used for displaying routes in a list with source and destination names"""
     source = serializers.CharField(source="source.name", read_only=True)
     destination = serializers.CharField(source="destination.name", read_only=True)
 
 
-# Сериализаторы для Train
+# Serializer for Train model
 class TrainSerializer(serializers.ModelSerializer):
     class Meta:
         model = Train
@@ -45,7 +45,7 @@ class TrainListSerializer(TrainSerializer):
     train_type = serializers.CharField(source="train_type.name", read_only=True)
 
 
-# Сериализаторы для Journey
+# Serializer for Journey model
 class JourneySerializer(serializers.ModelSerializer):
     class Meta:
         model = Journey
@@ -53,10 +53,10 @@ class JourneySerializer(serializers.ModelSerializer):
 
 
 class JourneyListSerializer(serializers.ModelSerializer):
-    """Для вывода списка рейсов с краткой информацией"""
+    """For displaying a list of journeys with brief information"""
     route_title = serializers.CharField(source="route.__str__", read_only=True)
     train_name = serializers.CharField(source="train.name", read_only=True)
-    # Посчитаем количество доступных мест на уровне ViewSet через аннотацию позже
+    # Count the number of available tickets at the ViewSet level through annotation later
     tickets_available = serializers.IntegerField(read_only=True)
 
     class Meta:
@@ -72,7 +72,7 @@ class JourneyListSerializer(serializers.ModelSerializer):
 
 
 class JourneyDetailSerializer(serializers.ModelSerializer):
-    """Для детального просмотра рейса со всей вложенной информацией"""
+    """For detailed viewing of a journey with all nested information"""
     route = RouteListCellSerializer(read_only=True)
     train = TrainListSerializer(read_only=True)
     crew = CrewSerializer(many=True, read_only=True)
@@ -91,7 +91,7 @@ class JourneyDetailSerializer(serializers.ModelSerializer):
         )
 
     def get_taken_places(self, obj):
-        """Возвращает список уже купленных билетов (вагон, место)"""
+        """Returns a list of already purchased tickets (cargo, seat)"""
         return [
             {"cargo": ticket.cargo, "seat": ticket.seat}
             for ticket in obj.tickets.all()

@@ -10,7 +10,7 @@ SECRET_KEY = config("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# Регистрация приложений
+# Registering applications in Django settings
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -18,7 +18,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    
+
     # Django REST Framework and JWT authentication 
     "rest_framework",
     "rest_framework_simplejwt",
@@ -57,14 +57,14 @@ TEMPLATES = [
 
 ROOT_URLCONF = "railway_station_config.urls"
 
-# Указываем Django использовать нашу кастомную модель пользователя
+# Tell Django to use our custom user model.
 AUTH_USER_MODEL = "user.User"
 
-# Настройка подключения к базе данных (PostgreSQL с фолбеком на SQLite для тестов)
+# Settings for database connection (PostgreSQL with fallback to SQLite for testing)
 DB_HOST = os.environ.get("DB_HOST")
 
-# Исключить предустановленное значение для поля автоинкремента в моделях Django,
-# чтобы использовать BigAutoField по умолчанию.
+# Exclude the default value for the auto-increment field in Django models,
+# use BigAutoField for primary keys by default, which is suitable for large datasets.
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 if DB_HOST:
@@ -79,7 +79,7 @@ if DB_HOST:
         }
     }
 else:
-    # Если переменные окружения не заданы, проект запустится на SQLite (удобно для быстрой разработки)
+    # If environment variables are not set, the project will run on SQLite (convenient for quick development)
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -87,20 +87,20 @@ else:
         }
     }
 
-# Настройки Django REST Framework
+# Settings for Django REST Framework
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    # По умолчанию закрываем все эндпоинты на чтение/запись для анонимов. 
-    # Вьюсеты, требующие кастомных доступов, переопределят это поле.
+    # Default permission classes are set to allow authenticated users to perform any action, while unauthenticated users can only read data. 
+    # Viewsets that require custom permissions will override this field.
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
-# Конфигурация JWT Токенов
+# Configuration for JWT Tokens
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
@@ -108,7 +108,7 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
-# Настройки Swagger документации
+# Settings for Swagger documentation using drf-spectacular
 SPECTACULAR_SETTINGS = {
     "TITLE": "Railway Station API Service",
     "DESCRIPTION": "API system for train journeys, crews, routes, and ticket ordering.",

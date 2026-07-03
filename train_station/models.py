@@ -69,8 +69,8 @@ class Journey(models.Model):
     )
     departure_time = models.DateTimeField()
     arrival_time = models.DateTimeField()
-    # Связь многие-ко-многим с Crew, так как на один рейс назначается несколько человек,
-    # и один человек может участвовать в разных рейсах.
+    # Connected to Crew via a many-to-many relationship, since multiple crew members can be assigned to a single journey,
+    # and the related_name allows accessing all journeys associated with a specific crew member.
     crew = models.ManyToManyField(Crew, related_name="journeys")
 
     def __str__(self):

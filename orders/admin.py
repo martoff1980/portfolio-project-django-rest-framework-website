@@ -3,9 +3,10 @@ from orders.models import Order, Ticket
 
 
 class TicketInline(admin.TabularInline):
-    """Позволяет просматривать и редактировать билеты прямо внутри страницы заказа"""
+    """Represents an inline form for the Ticket model within the Order admin page."""
     model = Ticket
-    extra = 1  # Количество пустых строк для добавления новых билетов вручную
+    # Empty forms for adding new tickets manually
+    extra = 1  
     fields = ("cargo", "seat", "journey")
 
 
@@ -15,7 +16,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_display_links = ("id", "user")
     list_filter = ("created_at",)
     search_fields = ("user__email",)
-    # Подключаем вложенное отображение билетов
+    # Connect the inline display of tickets to the Order admin page
     inlines = [TicketInline]
 
 

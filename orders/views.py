@@ -9,14 +9,14 @@ from orders import serializers
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = serializers.OrderSerializer
-    # Закрываем эндпоинт авторизацией (пользователь должен войти в систему)
+    # Close the endpoint with authentication (the user must be logged in)
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        # Обычные пользователи видят только свои заказы. Admin видит все.
+        # Users see only their own orders. Admin sees all.
         queryset = self.queryset.filter(user=self.request.user)
         
-        # Предзагрузка данных, чтобы избежать N+1 при выводе билетов и рейсов
+        # Reload related objects to avoid N+1 queries when displaying tickets and journeys
         if self.action in ("list", "retrieve"):
             queryset = queryset.prefetch_related(
                 "tickets__journey__route__source",
@@ -31,6 +31,6 @@ class OrderViewSet(viewsets.ModelViewSet):
         return serializers.OrderSerializer
 
     def perform_create(self, serializer):
-        # Оборачиваем сохранение заказа и билетов в контекст транзакции базы данных
+        # Wrap the saving of the order and tickets in a database transaction context
         with transaction.atomic():
             serializer.save(user=self.request.user)
