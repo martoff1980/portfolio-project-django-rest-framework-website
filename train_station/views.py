@@ -3,7 +3,15 @@ from django.db.models import F, Count
 from rest_framework import viewsets
 from rest_framework.permissions import IsAdminUser, IsAuthenticatedOrReadOnly
 
-from train_station.models import Crew, TrainType, Station, Route, Train, Journey
+from train_station.models import (
+    Crew,
+    TrainType,
+    Station,
+    Route,
+    Train,
+    Journey
+)
+
 from train_station import serializers
 
 
@@ -15,28 +23,31 @@ class CrewViewSet(viewsets.ModelViewSet):
 class TrainTypeViewSet(viewsets.ModelViewSet):
     queryset = TrainType.objects.all()
     serializer_class = serializers.TrainTypeSerializer
-    
+
     def get_queryset(self):
         queryset = self.queryset
-        # Фильтрация поездов по типу (например: ?train_type=1)
+        # Filtering trains by type (e.g., ?train_type=1)
         train_type_id = self.request.query_params.get("train_type")
         if train_type_id:
             queryset = queryset.filter(train_type_id=train_type_id)
         return queryset
-    
+
     def get_serializer_class(self):
         if self.action in ("list", "retrieve"):
             return serializers.TrainListSerializer
-        return serializers.TrainSerializer    
+        return serializers.TrainSerializer
 
 
 class StationViewSet(viewsets.ModelViewSet):
     queryset = Station.objects.all()
     serializer_class = serializers.StationSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,) 
-    # Свойство IsAuthenticatedOrReadOnly в сочетании с глобальными настройками 
-    # или явная проверка на Admin при записи обеспечит нужный уровень безопасности.
-    
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    # Property IsAuthenticatedOrReadOnly with global settings
+    # ensures that only authenticated users
+    # can create, update, or delete stations,
+    # or checking for Admin explicitly during write operations
+    # will ensure the required level of security
     def get_permissions(self):
         if self.action in ("create", "update", "partial_update", "destroy"):
             return [IsAdminUser()]
@@ -76,17 +87,13 @@ class JourneyViewSet(viewsets.ModelViewSet):
             # Total seats = (number of cargo cars * seats in cargo)
             # - number of purchased tickets
             total_places = F("train__cargo_num") * F("train__places_in_cargo")
-            queryset = (
-                queryset
-                .select_related("route__source", "route__destination", "train")
-                .annotate(tickets_available=total_places - Count("tickets"))
-            )
-        
+            queryset = queryset.select_related(
+                "route__source", "route__destination", "train"
+            ).annotate(tickets_available=total_places - Count("tickets"))
+
         if self.action == "retrieve":
             queryset = queryset.select_related(
-                "route__source", 
-                "route__destination", 
-                "train__train_type"
+                "route__source", "route__destination", "train__train_type"
             ).prefetch_related("crew", "tickets")
 
         # Filtering journeys by route ID if provided in query parameters
@@ -94,17 +101,22 @@ class JourneyViewSet(viewsets.ModelViewSet):
         if route_id:
             queryset = queryset.filter(route_id=route_id)
 
-        # Filtering journeys by source station name if provided in query parameters
+        # Filtering journeys by source station name
+        # if provided in query parameters
         source_station = self.request.query_params.get("source")
         if source_station:
-            queryset = queryset.filter(route__source__name__icontains=source_station)
+            queryset = (
+                queryset.filter(route__source__name__icontains=source_station)
+            )
 
-        # Filtering journeys by destination station name if provided in query parameters
+        # Filtering journeys by destination station name
+        # if provided in query parameters
         destination_station = self.request.query_params.get("destination")
         if destination_station:
-            queryset = queryset.filter(route__destination__name__icontains=destination_station)
+            queryset = queryset.filter(
+                route__destination__name__icontains=destination_station
+            )
         return queryset.order_by("departure_time")
-
 
     def get_serializer_class(self):
         if self.action == "list":

@@ -1,5 +1,12 @@
 from django.contrib import admin
-from train_station.models import Crew, TrainType, Station, Route, Train, Journey
+from train_station.models import (
+    Crew,
+    TrainType,
+    Station,
+    Route,
+    Train,
+    Journey
+)
 
 
 @admin.register(Crew)
@@ -32,7 +39,13 @@ class RouteAdmin(admin.ModelAdmin):
 
 @admin.register(Train)
 class TrainAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "cargo_num", "places_in_cargo", "train_type")
+    list_display = (
+        "id",
+        "name",
+        "cargo_num",
+        "places_in_cargo",
+        "train_type"
+    )
     list_display_links = ("id", "name")
     list_filter = ("train_type",)
     search_fields = ("name",)
@@ -40,15 +53,24 @@ class TrainAdmin(admin.ModelAdmin):
 
 @admin.register(Journey)
 class JourneyAdmin(admin.ModelAdmin):
-    list_display = ("id", "route", "train", "departure_time", "arrival_time")
+    list_display = (
+        "id",
+        "route",
+        "train",
+        "departure_time",
+        "arrival_time"
+    )
     list_display_links = ("id", "route")
-    # Filters for departure time and route for easy filtering in the admin interface
+    # Filters for departure time and route
+    # for easy filtering in the admin interface
     list_filter = ("departure_time", "route")
-    # Find journeys by source station name, destination station name, or train name
+    # Find journeys by source station name,
+    # destination station name, or train name
     search_fields = (
-        "route__source__name", 
-        "route__destination__name", 
+        "route__source__name",
+        "route__destination__name",
         "train__name"
     )
-    # Horizontal interface for selecting multiple crew members (ManyToManyField)
+    # Horizontal interface for selecting multiple
+    # crew members (ManyToManyField)
     filter_horizontal = ("crew",)

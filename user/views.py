@@ -6,12 +6,20 @@ from user.serializers import UserSerializer
 
 
 class CreateUserView(generics.CreateAPIView):
-    """Endpoint for registering a new user (available to everyone)"""
+    """
+    Endpoint for registering a new user
+    (available to everyone)
+    """
+
     serializer_class = UserSerializer
 
 
 class ManageUserView(generics.RetrieveUpdateAPIView):
-    """Endpoint for managing the authenticated user's profile (available only to authenticated users)"""
+    """
+    Endpoint for managing the authenticated user's profile
+    (available only to authenticated users)
+    """
+
     serializer_class = UserSerializer
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)

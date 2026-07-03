@@ -18,12 +18,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-    # Django REST Framework and JWT authentication 
+    # Django REST Framework and JWT authentication
     "rest_framework",
     "rest_framework_simplejwt",
     "drf_spectacular",
-    
     # Local apps
     "user",
     "train_station",
@@ -60,11 +58,14 @@ ROOT_URLCONF = "railway_station_config.urls"
 # Tell Django to use our custom user model.
 AUTH_USER_MODEL = "user.User"
 
-# Settings for database connection (PostgreSQL with fallback to SQLite for testing)
+# Settings for database connection
+# (PostgreSQL with fallback to SQLite for testing)
 DB_HOST = os.environ.get("DB_HOST")
 
-# Exclude the default value for the auto-increment field in Django models,
-# use BigAutoField for primary keys by default, which is suitable for large datasets.
+# Exclude the default value
+# for the auto-increment field in Django models,
+# use BigAutoField for primary keys by default,
+# which is suitable for large datasets.
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 if DB_HOST:
@@ -79,7 +80,8 @@ if DB_HOST:
         }
     }
 else:
-    # If environment variables are not set, the project will run on SQLite (convenient for quick development)
+    # If environment variables are not set,
+    # the project will run on SQLite (convenient for quick development)
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -92,7 +94,8 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    # Default permission classes are set to allow authenticated users to perform any action, while unauthenticated users can only read data. 
+    # Default permission classes are set to allow authenticated users
+    # to perform any action, while unauthenticated users can only read data.
     # Viewsets that require custom permissions will override this field.
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
@@ -111,7 +114,9 @@ SIMPLE_JWT = {
 # Settings for Swagger documentation using drf-spectacular
 SPECTACULAR_SETTINGS = {
     "TITLE": "Railway Station API Service",
-    "DESCRIPTION": "API system for train journeys, crews, routes, and ticket ordering.",
+    "DESCRIPTION": (
+        "API system for train journeys, crews, routes, and ticket ordering."
+    ),
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
 }

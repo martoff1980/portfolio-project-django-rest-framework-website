@@ -3,10 +3,14 @@ from orders.models import Order, Ticket
 
 
 class TicketInline(admin.TabularInline):
-    """Represents an inline form for the Ticket model within the Order admin page."""
+    """
+    Represents an inline form for the Ticket model
+    within the Order admin page
+    """
+
     model = Ticket
     # Empty forms for adding new tickets manually
-    extra = 1  
+    extra = 1
     fields = ("cargo", "seat", "journey")
 
 

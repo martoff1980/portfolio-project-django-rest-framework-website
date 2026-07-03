@@ -13,16 +13,28 @@ from drf_spectacular.views import (
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    
     # Endpoints for our applications
-    path("api/train-station/", include("train_station.urls", namespace="train_station")),
+    path(
+        "api/train-station/",
+        include("train_station.urls", namespace="train_station")
+    ),
     path("api/orders/", include("orders.urls", namespace="orders")),
-    
     # Add the following two lines to enable JWT authentication endpoints
-    path("api/user/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("api/user/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    
+    path(
+        "api/user/token/",
+        TokenObtainPairView.as_view(),
+        name="token_obtain_pair"
+    ),
+    path(
+        "api/user/token/refresh/",
+        TokenRefreshView.as_view(),
+        name="token_refresh"
+    ),
     # Add the following two lines to enable Swagger documentation
     path("api/doc/schema/", SpectacularAPIView.as_view(), name="schema"),
-    path("api/doc/swagger", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
+    path(
+        "api/doc/swagger",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
 ]

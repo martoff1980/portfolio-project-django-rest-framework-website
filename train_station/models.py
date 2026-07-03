@@ -27,19 +27,18 @@ class Station(models.Model):
 
 class Route(models.Model):
     source = models.ForeignKey(
-        Station, 
-        on_delete=models.CASCADE, 
-        related_name="route_sources"
+        Station, on_delete=models.CASCADE, related_name="route_sources"
     )
     destination = models.ForeignKey(
-        Station, 
-        on_delete=models.CASCADE, 
-        related_name="route_destinations"
+        Station, on_delete=models.CASCADE, related_name="route_destinations"
     )
     distance = models.IntegerField()
 
     def __str__(self):
-        return f"{self.source.name} - {self.destination.name} ({self.distance} km)"
+        return (
+            f"{self.source.name} - "
+            f"{self.destination.name} ({self.distance} km)"
+        )
 
 
 class Train(models.Model):
@@ -47,9 +46,7 @@ class Train(models.Model):
     cargo_num = models.IntegerField()
     places_in_cargo = models.IntegerField()
     train_type = models.ForeignKey(
-        TrainType, 
-        on_delete=models.CASCADE, 
-        related_name="trains"
+        TrainType, on_delete=models.CASCADE, related_name="trains"
     )
 
     def __str__(self):
@@ -58,20 +55,25 @@ class Train(models.Model):
 
 class Journey(models.Model):
     route = models.ForeignKey(
-        Route, 
-        on_delete=models.CASCADE, 
+        Route,
+        on_delete=models.CASCADE,
         related_name="journeys"
     )
     train = models.ForeignKey(
-        Train, 
-        on_delete=models.CASCADE, 
+        Train,
+        on_delete=models.CASCADE,
         related_name="journeys"
     )
     departure_time = models.DateTimeField()
     arrival_time = models.DateTimeField()
-    # Connected to Crew via a many-to-many relationship, since multiple crew members can be assigned to a single journey,
-    # and the related_name allows accessing all journeys associated with a specific crew member.
+    # Connected to Crew via a many-to-many relationship,
+    # since multiple crew members can be assigned to a single journey,
+    # and the related_name allows accessing all journeys associated with
+    # a specific crew member.
     crew = models.ManyToManyField(Crew, related_name="journeys")
 
     def __str__(self):
-        return f"Journey {self.id}: {self.route} at {self.departure_time.strftime('%Y-%m-%d %H:%M')}"
+        return (
+            f"Journey {self.id}: {self.route} at "
+            f"{self.departure_time.strftime('%Y-%m-%d %H:%M')}"
+        )
