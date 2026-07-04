@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     # Django REST Framework and JWT authentication
     "rest_framework",
     "rest_framework_simplejwt",
@@ -29,6 +30,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -54,6 +56,9 @@ TEMPLATES = [
 ]
 
 ROOT_URLCONF = "railway_station_config.urls"
+
+# Enable CORS for all origins (for development purposes)
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Tell Django to use our custom user model.
 AUTH_USER_MODEL = "user.User"
