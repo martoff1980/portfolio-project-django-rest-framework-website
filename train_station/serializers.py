@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 from train_station.models import (
@@ -117,6 +118,13 @@ class JourneyDetailSerializer(serializers.ModelSerializer):
             "taken_places",
         )
 
+    @extend_schema_field(
+        serializers.ListSerializer(
+            child=serializers.DictField(
+                child=serializers.IntegerField()
+            )
+        )
+    )
     def get_taken_places(self, obj):
         """Returns a list of already purchased tickets (cargo, seat)"""
         return [
