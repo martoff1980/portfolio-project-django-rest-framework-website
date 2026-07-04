@@ -24,19 +24,6 @@ class TrainTypeViewSet(viewsets.ModelViewSet):
     queryset = TrainType.objects.all()
     serializer_class = serializers.TrainTypeSerializer
 
-    def get_queryset(self):
-        queryset = self.queryset
-        # Filtering trains by type (e.g., ?train_type=1)
-        train_type_id = self.request.query_params.get("train_type")
-        if train_type_id:
-            queryset = queryset.filter(train_type_id=train_type_id)
-        return queryset
-
-    def get_serializer_class(self):
-        if self.action in ("list", "retrieve"):
-            return serializers.TrainListSerializer
-        return serializers.TrainSerializer
-
 
 class StationViewSet(viewsets.ModelViewSet):
     queryset = Station.objects.all()
