@@ -19,6 +19,8 @@ urlpatterns = [
         include("train_station.urls", namespace="train_station")
     ),
     path("api/orders/", include("orders.urls", namespace="orders")),
+    # Connect the user app's URLs to the main project
+    path("api/user/", include("user.urls", namespace="user")),
     # Add the following two lines to enable JWT authentication endpoints
     path(
         "api/user/token/",
