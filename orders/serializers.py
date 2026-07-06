@@ -10,6 +10,7 @@ class TicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
         fields = ("id", "cargo", "seat", "journey")
+        validators = []
 
     def validate(self, attrs):
         """
@@ -27,7 +28,7 @@ class TicketSerializer(serializers.ModelSerializer):
         # and the total number of cargos in the train.
         if attrs["cargo"] > train.cargo_num or attrs["cargo"] < 1:
             raise ValidationError(
-                {"cargo": f"В этом поезде всего {train.cargo_num} вагонов(а)."}
+                {"cargo": f"Total {train.cargo_num} cargos in this train."}
             )
 
         # Checking if the seat number is valid for the given cargo.
@@ -89,6 +90,21 @@ class OrderSerializer(serializers.ModelSerializer):
 
         return order
 
+    def update(self, instance, validated_data):
+        tickets_data = validated_data.pop("tickets", None)
+        
+        # Send current order to the ticket context so that
+        # the validator can exclude them
+        self.context["order"] = instance
+        
+        if tickets_data is not None:
+            # This is a simple PUT logic:
+            # we delete the old tickets of the order and create the sent ones again
+            instance.tickets.all().delete()
+            for ticket_data in tickets_data:
+                Ticket.objects.create(order=instance, **ticket_data)
+                
+        return super().update(instance, validated_data)
 
 class OrderListSerializer(OrderSerializer):
     """
