@@ -135,3 +135,21 @@ docker compose up
 - Get token: \
    Send POST-request into [http://127.0.0.1:8000/api/user/token/](http://127.0.0.1:8000/api/user/token/) with same account credentials. \
   In response, you will receive an access token that needs to be included in the headers of subsequent requests. (Authorization: `Bearer <your_token>`).
+
+### 6. API Endpoints
+
+- Authentication and Users `(user/)` \
+  POST /api/user/register/ — регистрация нового пользователя. \
+  POST /api/user/token/ — получение JWT-токена (Login). \
+  POST /api/user/token/refresh/ — обновление JWT-токена. \
+  GET/PUT/PATCH /api/user/me/ — просмотр и редактирование профиля. \
+
+- Station control `(train-station/)`: \
+  GET/POST /api/train-station/stations/ — список и создание станций. \
+  GET/POST /api/train-station/routes/ — список и создание маршрутов. \
+  GET/POST /api/train-station/trains/ — список и создание поездов (доступны фильтры ?train_type=). \
+  GET/POST /api/train-station/journeys/ — рейсы (доступны фильтры ?source=, ?destination=, ?date=, ?route=). \
+  GET/POST /api/train-station/crews/ — управление экипажем. \
+
+- Orders `(orders/)`: \
+  GET/POST /api/orders/orders/ — просмотр истории своих заказов и покупка билетов (вложенная структура).
