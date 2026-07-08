@@ -139,7 +139,7 @@ docker compose up
 ### 6. API Endpoints
 
 - **Authentication and Users** `(user/)` \
-  **POST** /api/user/register/ — new user registration. \
+  **POST** [/api/user/register/](http://127.0.0.1:8000/api/user/register/) — new user registration. \
   **POST** /api/user/token/ — obtaining a JWT token (Login). \
   **POST** /api/user/token/refresh/ — update JWT-токена. \
   **GET/PUT/PATCH** /api/user/me/ — viewing and editing the profile. \
@@ -152,4 +152,4 @@ docker compose up
   **GET/POST** /api/train-station/crews/ — crew management. \
 
 - **Orders** `(orders/)`: \
-  **GET/POST** /api/orders/orders/ — просмотр истории своих заказов и покупка билетов (вложенная структура).
+  **GET/POST** /api/orders/orders/ — viewing order history and purchasing tickets (nested structure).
