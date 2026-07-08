@@ -129,11 +129,11 @@ docker compose up
 
 ### 5. Getting access
 
-Registration:
+\*\* Registration:
 
 Send POST-request into [http://127.0.0.1:8000/api/user/register/](http://127.0.0.1:8000/api/user/register/) and pass the email and password in JSON format.
 
-Get token:
+\*\* Get token:
 
 Send POST-request into [http://127.0.0.1:8000/api/user/token/](http://127.0.0.1:8000/api/user/token/) with same account credentials.
 
