@@ -84,20 +84,36 @@ The project is divided into isolated Django applications based on areas of respo
 
 ## 💻 Installation using GitHub
 
-### 1. Cloning repository and setting envoriment
+### 1. Cloning repository
 
 git clone [https://github.com/martoff1980/portfolio-project-django-rest-framework-website.git](https://github.com/martoff1980/portfolio-project-django-rest-framework-website.git)
 
-rename directory portfolio-project-django-rest-framework-website
-
-as railway-station-api
+rename `portfolio-project-django-rest-framework-website` as `railway-station-api`
 
 cd railway-station-api
 
-# Create and activate virtual envoriment
+### 2. Creating and activating virtual envoriment
 
+```text
 python -m venv venv source
 
 venv/bin/activate # For Linux/macOS
 
 venv\Scripts\activate # For Windows
+
+pip install -r requirements.txt
+```
+
+### 3.Setting variables of envoriment
+
+```text
+DJANGO_SECRET_KEY=your_secret_key_here
+DJANGO_DEBUG=True
+DJANGO_ALLOWED_HOSTS=127.0.0.1,localhost
+
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_NAME=railway_db
+DB_USER=postgres
+DB_PASSWORD=your_postgres_password
+```
