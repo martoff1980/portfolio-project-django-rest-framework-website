@@ -9,12 +9,10 @@ primary database and JWT authentication.
 - **Admin Panel**: Convenient management of logistics, trains, and orders via `/admin/`.
 - **Interactive documentation**: The full API specification (Swagger UI) is available at `/api/doc/swagger/`
 - **Train and Train Type Management**: Adding trains with specifications for the number of carriages and seats (`Train`, `TrainType`).
-- **Управление станциями и маршрутами**: Создание станций с координатами и формирование маршрутов между ними (`Station`, `Route`).
+- **Station and route management**: Creating stations with coordinates and forming routes between them (`Station`, `Route`).
 - **Journeys**: Scheduling journeys and assigning the crew, train, and departure/arrival times.
-
 - **Order and Ticket Management**: Capability to book flight tickets with automatic seat availability validation and protection against duplicate bookings (`Order`, `Ticket`). **Flexible filtering**:
   Search for trips by departure/arrival stations, route, and date, as well as filtering trains by type.
-
 - **Access rights management**: Viewing the schedule is available to all users; logistics management is restricted to administrators; and creating orders is available to authorized passengers.
 
 ## Project structure
