@@ -1,7 +1,7 @@
 # Train Station API Service
 
-An API service for automating railway station management, trips, crew scheduling, and ticket booking[cite: 1]. The project is built using **Django REST Framework (DRF)**, with PostgreSQL as the
-primary database and JWT authentication.
+An API service for automating railway station management, trips, crew scheduling, and ticket booking. The project is built using **Django REST Framework (DRF)**, with PostgreSQL as the primary
+database and JWT authentication.
 
 ## 🚀 Features
 
@@ -142,14 +142,14 @@ docker compose up
   **POST** [/api/user/register/](http://127.0.0.1:8000/api/user/register/) — new user registration. \
   **POST** [/api/user/token/](http://127.0.0.1:8000/api/user/token/) — obtaining a JWT token (Login). \
   **POST** [/api/user/token/refresh/](http://127.0.0.1:8000/api/user/token/refresh/) — update JWT-токена. \
-  **GET/PUT/PATCH** [/api/user/me/](http://127.0.0.1:8000/api/user/me/) — viewing and editing the profile. \
+  **GET/PUT/PATCH** [/api/user/me/](http://127.0.0.1:8000/api/user/me/) — viewing and editing the profile.
 
 - **Station control** `(train-station/)`: \
   **GET/POST** [/api/train-station/stations/](http://127.0.0.1:8000/api/train-station/stations/) — list and creation of stations. \
   **GET/POST** [/api/train-station/routes/](http://127.0.0.1:8000/api/train-station/routes/) — list and creation of routes. \
   **GET/POST** [/api/train-station/trains/](http://127.0.0.1:8000/api/train-station/trains/) — list and create trains (?train_type= filters available). \
   **GET/POST** [/api/train-station/journeys/](http://127.0.0.1:8000/api/train-station/journeys/) — journeys (filters available ?source=, ?destination=, ?date=, ?route=). \
-  **GET/POST** [/api/train-station/crews/](http://127.0.0.1:8000/api/train-station/crews/) — crew management. \
+  **GET/POST** [/api/train-station/crews/](http://127.0.0.1:8000/api/train-station/crews/) — crew management.
 
 - **Orders** `(orders/)`: \
   **GET/POST** [/api/orders/orders/](http://127.0.0.1:8000/api/orders/orders/) — viewing order history and purchasing tickets (nested structure).
