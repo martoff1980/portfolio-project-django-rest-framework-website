@@ -84,25 +84,20 @@ The project is divided into isolated Django applications based on areas of respo
 
 ## 💻 Installation using GitHub
 
-### 1. Клонирование репозитория и настройка окружения
+### 1. Cloning repository and setting envoriment
 
-```bash
 git clone [https://github.com/martoff1980/portfolio-project-django-rest-framework-website.git](https://github.com/martoff1980/portfolio-project-django-rest-framework-website.git)
 
 rename directory portfolio-project-django-rest-framework-website
 
 as railway-station-api
 
-```
-
 cd railway-station-api
 
 # Create and activate virtual envoriment
 
-python -m venv venv source venv/bin/activate # For Linux/macOS
+python -m venv venv source
 
-# venv\Scripts\activate # For Windows
+venv/bin/activate # For Linux/macOS
 
-```
-
-```
+venv\Scripts\activate # For Windows
