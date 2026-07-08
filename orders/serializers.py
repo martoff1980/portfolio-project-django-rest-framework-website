@@ -92,19 +92,21 @@ class OrderSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         tickets_data = validated_data.pop("tickets", None)
-        
+
         # Send current order to the ticket context so that
         # the validator can exclude them
         self.context["order"] = instance
-        
+
         if tickets_data is not None:
             # This is a simple PUT logic:
-            # we delete the old tickets of the order and create the sent ones again
+            # we delete the old tickets of the order
+            # and create the sent ones again
             instance.tickets.all().delete()
             for ticket_data in tickets_data:
                 Ticket.objects.create(order=instance, **ticket_data)
-                
+
         return super().update(instance, validated_data)
+
 
 class OrderListSerializer(OrderSerializer):
     """
