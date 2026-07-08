@@ -11,3 +11,4 @@ db.sqlite3
 images/*
 !images/structure_db.png
 plane.md
+readme.md
