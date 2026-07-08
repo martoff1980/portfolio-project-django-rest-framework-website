@@ -18,8 +18,6 @@ services:
     container_name: railway_api_container
     ports:
       - '8000:8000'
-    volumes:
-      - .:/app
     env_file:
       - .env
     environment:

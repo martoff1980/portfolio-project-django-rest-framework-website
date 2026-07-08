@@ -1,0 +1,36 @@
+# Git
+.git
+.gitignore
+
+# Docker
+.dockerignore
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Виртуальное окружение
+venv/
+.venv/
+
+# База данных (если создаётся отдельно)
+db.sqlite3
+
+# Пользовательские файлы
+images/
+
+# Документация
+README.md
+plane.md
+
+# Переменные окружения
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# Системные файлы
+.DS_Store
+Thumbs.db
