@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.views.generic.base import RedirectView
 from django.urls import path, include
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -12,6 +13,11 @@ from drf_spectacular.views import (
 )
 
 urlpatterns = [
+    # Main page: Automatically redirect to Swagger documentation
+    path(
+        "",
+        RedirectView.as_view(pattern_name="swagger-ui", permanent=False)
+    ),
     path("admin/", admin.site.urls),
     # Endpoints for our applications
     path(
