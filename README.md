@@ -88,9 +88,11 @@ The project is divided into isolated Django applications based on areas of respo
 
 git clone [https://github.com/martoff1980/portfolio-project-django-rest-framework-website.git](https://github.com/martoff1980/portfolio-project-django-rest-framework-website.git)
 
-rename `portfolio-project-django-rest-framework-website` as `railway-station-api`
+renaming `portfolio-project-django-rest-framework-website` as `railway-station-api`
 
+```text
 cd railway-station-api
+```
 
 ### 2. Creating and activating virtual envoriment
 
@@ -116,4 +118,12 @@ DB_PORT=5432
 DB_NAME=railway_db
 DB_USER=postgres
 DB_PASSWORD=your_postgres_password
+```
+
+### 4. Building and packaging the Docker image
+
+```text
+docker-compose build
+
+docker-compose up
 ```
