@@ -1,4 +1,5 @@
 from django.db.models import F, Count
+from train_station import serializers
 
 from rest_framework import viewsets
 from rest_framework.permissions import IsAdminUser, IsAuthenticatedOrReadOnly
@@ -12,36 +13,37 @@ from train_station.models import (
     Journey
 )
 
-from train_station import serializers
+class BaseAdminReadOnlyViewSet(viewsets.ModelViewSet):
+    """
+    Base ViewSet for logistics:
+    Read access (GET) is available to all authorized users
+    and anonymous users, while modification (POST, PUT, PATCH, DELETE)
+    is restricted to administrators ONLY (is_staff=True).
+    """
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    def get_permissions(self):
+        if self.action in ("create", "update", "partial_update", "destroy"):
+            return [IsAdminUser()]
+        return super().get_permissions()
 
 
-class CrewViewSet(viewsets.ModelViewSet):
+class CrewViewSet(BaseAdminReadOnlyViewSet):
     queryset = Crew.objects.all()
     serializer_class = serializers.CrewSerializer
 
 
-class TrainTypeViewSet(viewsets.ModelViewSet):
+class TrainTypeViewSet(BaseAdminReadOnlyViewSet):
     queryset = TrainType.objects.all()
     serializer_class = serializers.TrainTypeSerializer
 
 
-class StationViewSet(viewsets.ModelViewSet):
+class StationViewSet(BaseAdminReadOnlyViewSet):
     queryset = Station.objects.all()
     serializer_class = serializers.StationSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
-
-    # Property IsAuthenticatedOrReadOnly with global settings
-    # ensures that only authenticated users
-    # can create, update, or delete stations,
-    # or checking for Admin explicitly during write operations
-    # will ensure the required level of security
-    def get_permissions(self):
-        if self.action in ("create", "update", "partial_update", "destroy"):
-            return [IsAdminUser()]
-        return [IsAuthenticatedOrReadOnly()]
 
 
-class RouteViewSet(viewsets.ModelViewSet):
+class RouteViewSet(BaseAdminReadOnlyViewSet):
     queryset = Route.objects.select_related("source", "destination")
     serializer_class = serializers.RouteSerializer
 
@@ -51,7 +53,7 @@ class RouteViewSet(viewsets.ModelViewSet):
         return serializers.RouteSerializer
 
 
-class TrainViewSet(viewsets.ModelViewSet):
+class TrainViewSet(BaseAdminReadOnlyViewSet):
     queryset = Train.objects.select_related("train_type")
     serializer_class = serializers.TrainSerializer
 
@@ -61,13 +63,13 @@ class TrainViewSet(viewsets.ModelViewSet):
         return serializers.TrainSerializer
 
 
-class JourneyViewSet(viewsets.ModelViewSet):
+class JourneyViewSet(BaseAdminReadOnlyViewSet):
     queryset = Journey.objects.all()
     serializer_class = serializers.JourneySerializer
 
     def get_queryset(self):
         queryset = self.queryset
-
+    
         # Optimization of queries for different actions
         if self.action == "list":
             # Counting tickets for each journey and calculating available seats
