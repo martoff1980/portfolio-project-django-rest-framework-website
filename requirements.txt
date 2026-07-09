@@ -7,3 +7,6 @@ python-decouple >=3.8
 django-cors-headers >=4.9.0
 flake8>=7.3.0
 black>=26.5.0
+django-rest-framework-nested == 0.0.1
+django-crispy-forms>=2.6
+drf-yasg>=1.21.0
