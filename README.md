@@ -135,7 +135,7 @@ docker exec -it railway_api_container python manage.py createsuperuser
 
 - **Admin Panel:** \
    Now goto [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) and confirm your credentials. \
-   You can refresh your credentials [http://127.0.0.1:8000/api/user/me/](http://127.0.0.1:8000/api/user/me/)
+   You can update your credentials [http://127.0.0.1:8000/api/user/me/](http://127.0.0.1:8000/api/user/me/)
 
 - **Get token:** \
    Send POST-request into [http://127.0.0.1:8000/api/user/token/](http://127.0.0.1:8000/api/user/token/) with same account credentials. \
@@ -145,15 +145,15 @@ docker exec -it railway_api_container python manage.py createsuperuser
 ### 6. Getting API Endpoints for admin
 
 - **Station control** `(train-station/)`: \
-  **GET/POST** [/api/train-station/stations/](http://127.0.0.1:8000/api/train-station/stations/) — list and creation of stations. \
-  **GET/POST** [/api/train-station/routes/](http://127.0.0.1:8000/api/train-station/routes/) — list and creation of routes. \
-  **GET/POST** [/api/train-station/trains/](http://127.0.0.1:8000/api/train-station/trains/) — list and create trains. \
-  **GET/POST** [/api/train-station/train-types/](http://127.0.0.1:8000/api/train-station/train-types/) — list and create train types (?train_type= filters available). \
-  **GET/POST** [/api/train-station/journeys/](http://127.0.0.1:8000/api/train-station/journeys/) — journeys (filters available ?source=, ?destination=, ?date=, ?route=). \
-  **GET/POST** [/api/train-station/crews/](http://127.0.0.1:8000/api/train-station/crews/) — crew management.
+  **GET/POST/PATCH/DELETE** [/api/train-station/stations/](http://127.0.0.1:8000/api/train-station/stations/) — list and creation of stations. \
+  **GET/POST/PATCH/DELETE** [/api/train-station/routes/](http://127.0.0.1:8000/api/train-station/routes/) — list and creation of routes. \
+  **GET/POST/PATCH/DELETE** [/api/train-station/trains/](http://127.0.0.1:8000/api/train-station/trains/) — list and create trains. \
+  **GET/POST/PATCH/DELETE** [/api/train-station/train-types/](http://127.0.0.1:8000/api/train-station/train-types/) — list and create train types (?train_type= filters available). \
+  **GET/POST/PATCH/DELETE** [/api/train-station/journeys/](http://127.0.0.1:8000/api/train-station/journeys/) — journeys (filters available ?source=, ?destination=, ?date=, ?route=). \
+  **GET/POST/PATCH/DELETE** [/api/train-station/crews/](http://127.0.0.1:8000/api/train-station/crews/) — crew management.
 
 - **Orders** `(orders/)`: \
-  **GET/POST** [/api/orders/orders/](http://127.0.0.1:8000/api/orders/orders/) — viewing order history and purchasing tickets (nested structure).
+  **GET/POST/PATCH/DELETE** [/api/orders/orders/](http://127.0.0.1:8000/api/orders/orders/) — viewing order history and purchasing tickets (nested structure).
 
 <!-- ## REMark
 
