@@ -133,7 +133,7 @@ docker exec -it railway_api_container python manage.py createsuperuser
 
 ### 5. LOGIN as admin
 
-- **Admin Panel:** \
+- **Admin Panel:** `(admin/)` \
    Now goto [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) and confirm your credentials. \
    You can update your credentials [http://127.0.0.1:8000/api/user/me/](http://127.0.0.1:8000/api/user/me/)
 
@@ -160,9 +160,9 @@ docker exec -it railway_api_container python manage.py createsuperuser
 - **Admin Panel:** \
   You goto [http://127.0.0.1:8000/admin/logout/](http://127.0.0.1:8000/admin/logout/).
 
-<!-- ### 5. Getting access
+### 8. LOGIN as user
 
-- **Registration:** \
+- **Registration:** `(user/)` \
   Send POST-request into [http://127.0.0.1:8000/api/user/register/](http://127.0.0.1:8000/api/user/register/) and pass the email and password in JSON format.
 
 - **Get token:** \
@@ -173,4 +173,17 @@ docker exec -it railway_api_container python manage.py createsuperuser
   **POST** [/api/user/register/](http://127.0.0.1:8000/api/user/register/) — new user registration. \
   **POST** [/api/user/token/](http://127.0.0.1:8000/api/user/token/) — obtaining a JWT token (Login). \
   **POST** [/api/user/token/refresh/](http://127.0.0.1:8000/api/user/token/refresh/) — update JWT-токена. \
-  **GET/PUT/PATCH** [/api/user/me/](http://127.0.0.1:8000/api/user/me/) — viewing and editing the profile. -->
+  **GET/PUT/PATCH** [/api/user/me/](http://127.0.0.1:8000/api/user/me/) — viewing and editing the profile.
+
+### 9. Getting API Endpoints for admin
+
+- **Station control** `(train-station/)`: \
+  **GET** [/api/train-station/stations/](http://127.0.0.1:8000/api/train-station/stations/) — list and creation of stations. \
+  **GET** [/api/train-station/routes/](http://127.0.0.1:8000/api/train-station/routes/) — list and creation of routes. \
+  **GET** [/api/train-station/trains/](http://127.0.0.1:8000/api/train-station/trains/) — list and create trains. \
+  **GET** [/api/train-station/train-types/](http://127.0.0.1:8000/api/train-station/train-types/) — list and create train types (?train_type= filters available). \
+  **GET** [/api/train-station/journeys/](http://127.0.0.1:8000/api/train-station/journeys/) — journeys (filters available ?source=, ?destination=, ?date=, ?route=). \
+  **GET** [/api/train-station/crews/](http://127.0.0.1:8000/api/train-station/crews/) — crew management.
+
+- **Orders** `(orders/)`: \
+  **GET/POST/PATCH/DELETE** [/api/orders/orders/](http://127.0.0.1:8000/api/orders/orders/) — viewing order history and purchasing tickets (nested structure).
