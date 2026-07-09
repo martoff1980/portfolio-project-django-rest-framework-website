@@ -155,7 +155,7 @@ docker exec -it railway_api_container python manage.py createsuperuser
 - **Orders** `(orders/)`: \
   **GET/POST/PATCH/DELETE** [/api/orders/orders/](http://127.0.0.1:8000/api/orders/orders/) — viewing order history and purchasing tickets (nested structure).
 
-## 7. LOGOUT as admin
+### 7. LOGOUT as admin
 
 - **Admin Panel:** \
   You goto [http://127.0.0.1:8000/admin/logout/](http://127.0.0.1:8000/admin/logout/).
@@ -163,7 +163,7 @@ docker exec -it railway_api_container python manage.py createsuperuser
 ### 8. LOGIN as user
 
 - **Registration:** `(user/)` \
-  Send POST-request into [http://127.0.0.1:8000/api/user/register/](http://127.0.0.1:8000/api/user/register/) and pass the email and password in JSON format.
+  Send POST-request into [http://127.0.0.1:8000/api/user/register/](http://127.0.0.1:8000/api/user/register/) and pass the email and password.
 
 - **Get token:** \
    Send POST-request into [http://127.0.0.1:8000/api/user/token/](http://127.0.0.1:8000/api/user/token/) with same account credentials. \
