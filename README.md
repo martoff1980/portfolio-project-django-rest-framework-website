@@ -125,24 +125,20 @@ DB_PASSWORD=your_postgres_password
 ```text
 docker compose build
 docker compose up
+
+# create admin
+docker exec -it railway_api_container python manage.py createsuperuser
+# then input email and password
 ```
 
-### 5. Getting access
-
-- **Registration:** \
-  Send POST-request into [http://127.0.0.1:8000/api/user/register/](http://127.0.0.1:8000/api/user/register/) and pass the email and password in JSON format.
+### 5. Getting access for admin
 
 - **Get token:** \
    Send POST-request into [http://127.0.0.1:8000/api/user/token/](http://127.0.0.1:8000/api/user/token/) with same account credentials. \
-  In response, you will receive an access token that needs to be included in the headers of subsequent requests. (Authorization: `Bearer <your_token>`).
-
-### 6. API Endpoints
-
-- **Authentication and Users** `(user/)` \
-  **POST** [/api/user/register/](http://127.0.0.1:8000/api/user/register/) — new user registration. \
-  **POST** [/api/user/token/](http://127.0.0.1:8000/api/user/token/) — obtaining a JWT token (Login). \
+  In response, you will receive an access token that needs to be included in the headers of subsequent requests. (Authorization: `Bearer <your_token>`). \
   **POST** [/api/user/token/refresh/](http://127.0.0.1:8000/api/user/token/refresh/) — update JWT-токена. \
-  **GET/PUT/PATCH** [/api/user/me/](http://127.0.0.1:8000/api/user/me/) — viewing and editing the profile.
+
+### 6. Getting API Endpoints for admin
 
 - **Station control** `(train-station/)`: \
   **GET/POST** [/api/train-station/stations/](http://127.0.0.1:8000/api/train-station/stations/) — list and creation of stations. \
@@ -154,3 +150,20 @@ docker compose up
 
 - **Orders** `(orders/)`: \
   **GET/POST** [/api/orders/orders/](http://127.0.0.1:8000/api/orders/orders/) — viewing order history and purchasing tickets (nested structure).
+
+<!-- ## REMark
+
+### 5. Getting access
+
+- **Registration:** \
+  Send POST-request into [http://127.0.0.1:8000/api/user/register/](http://127.0.0.1:8000/api/user/register/) and pass the email and password in JSON format.
+
+- **Get token:** \
+   Send POST-request into [http://127.0.0.1:8000/api/user/token/](http://127.0.0.1:8000/api/user/token/) with same account credentials. \
+  In response, you will receive an access token that needs to be included in the headers of subsequent requests. (Authorization: `Bearer <your_token>`).
+
+- **Authentication and Users** `(user/)` \
+  **POST** [/api/user/register/](http://127.0.0.1:8000/api/user/register/) — new user registration. \
+  **POST** [/api/user/token/](http://127.0.0.1:8000/api/user/token/) — obtaining a JWT token (Login). \
+  **POST** [/api/user/token/refresh/](http://127.0.0.1:8000/api/user/token/refresh/) — update JWT-токена. \
+  **GET/PUT/PATCH** [/api/user/me/](http://127.0.0.1:8000/api/user/me/) — viewing and editing the profile. -->
