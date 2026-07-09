@@ -133,6 +133,10 @@ docker exec -it railway_api_container python manage.py createsuperuser
 
 ### 5. Getting access for admin
 
+- **Admin Panel:** \
+   Now goto [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) and confirm your credentials. \
+   You can refresh your credentials [http://127.0.0.1:8000/api/user/me/](http://127.0.0.1:8000/api/user/me/)
+
 - **Get token:** \
    Send POST-request into [http://127.0.0.1:8000/api/user/token/](http://127.0.0.1:8000/api/user/token/) with same account credentials. \
   In response, you will receive an access token that needs to be included in the headers of subsequent requests. (Authorization: `Bearer <your_token>`). \
