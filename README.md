@@ -153,7 +153,7 @@ docker exec -it railway_api_container python manage.py createsuperuser
   **GET/POST/PATCH/DELETE** [/api/train-station/crews/](http://127.0.0.1:8000/api/train-station/crews/) — crew management.
 
 - **Orders** `(orders/)`: \
-  **GET/POST/PATCH/DELETE** [/api/orders/orders/](http://127.0.0.1:8000/api/orders/orders/) — viewing order history and purchasing tickets (nested structure).
+  **GET/POST/PATCH/DELETE** [/api/orders/orders/](http://127.0.0.1:8000/api/orders/orders/) — viewing order history and purchasing tickets (nested structure) in JSON-format.
 
 ### 7. LOGOUT as admin
 
@@ -186,4 +186,4 @@ docker exec -it railway_api_container python manage.py createsuperuser
   **GET** [/api/train-station/crews/](http://127.0.0.1:8000/api/train-station/crews/) — crew management.
 
 - **Orders** `(orders/)`: \
-  **GET/POST/PATCH/DELETE** [/api/orders/orders/](http://127.0.0.1:8000/api/orders/orders/) — viewing order history and purchasing tickets (nested structure).
+  **GET/POST/PATCH/DELETE** [/api/orders/orders/](http://127.0.0.1:8000/api/orders/orders/) — viewing order history and purchasing tickets (nested structure) in JSON-format.
