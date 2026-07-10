@@ -1,3 +1,4 @@
+import json
 from django.db import IntegrityError
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
@@ -62,15 +63,36 @@ class TicketListSerializer(TicketSerializer):
     """Used for displaying tickets within order details"""
     journey = JourneyListSerializer(read_only=True)
 
+class TicketsField(serializers.Field):
+    def to_internal_value(self, data):
+        if isinstance(data, str):
+            try:
+                data = json.loads(data)
+            except json.JSONDecodeError:
+                raise serializers.ValidationError("Invalid JSON.")
+
+        serializer = TicketSerializer(data=data, many=True)
+        serializer.is_valid(raise_exception=True)
+        return serializer.validated_data
+
+    def to_representation(self, value):
+        return TicketSerializer(value.all(), many=True).data
 
 class OrderSerializer(serializers.ModelSerializer):
     # Order is created along with a list of tickets
     # (Writable Nested Serializer)
-    tickets = TicketSerializer(many=True, allow_empty=False)
+    tickets = TicketsField(
+        style={
+            "base_template": "textarea.html",
+            "rows": 15,
+            "placeholder": '[{"cargo":1,"seat":12,"journey":1}]'
+        }
+    )
 
     class Meta:
         model = Order
         fields = ("id", "tickets", "created_at")
+        read_only_fields = ("id", "created_at")
 
     def create(self, validated_data):
         """
