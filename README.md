@@ -171,6 +171,7 @@ docker exec -it railway_api_container python manage.py createsuperuser
 
 - **Authentication and Users** `(user/)` \
   **POST** [/api/user/register/](http://127.0.0.1:8000/api/user/register/) — new user registration. \
+  **POST** [/api/user/login/](http://127.0.0.1:8000/api/user/login/) — login current user. \
   **POST** [/api/user/token/](http://127.0.0.1:8000/api/user/token/) — obtaining a JWT token (Login). \
   **POST** [/api/user/token/refresh/](http://127.0.0.1:8000/api/user/token/refresh/) — update JWT-токена. \
   **GET/PUT/PATCH** [/api/user/me/](http://127.0.0.1:8000/api/user/me/) — viewing and editing the profile.
