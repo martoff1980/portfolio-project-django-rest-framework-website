@@ -1,6 +1,7 @@
 from django.db import transaction
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 
 from orders.models import Order
 from orders import serializers
@@ -11,6 +12,8 @@ class OrderViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.OrderSerializer
     # Close the endpoint with authentication (the user must be logged in)
     permission_classes = (IsAuthenticated,)
+    # Update: BrowsableAPIRenderer is added to the list of renderers
+    renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
 
     def get_queryset(self):
         # Users see only their own orders. Admin sees all.

@@ -13,6 +13,7 @@ from train_station.models import (
     Journey
 )
 
+
 class BaseAdminReadOnlyViewSet(viewsets.ModelViewSet):
     """
     Base ViewSet for logistics:
@@ -69,7 +70,7 @@ class JourneyViewSet(BaseAdminReadOnlyViewSet):
 
     def get_queryset(self):
         queryset = self.queryset
-    
+
         # Optimization of queries for different actions
         if self.action == "list":
             # Counting tickets for each journey and calculating available seats
