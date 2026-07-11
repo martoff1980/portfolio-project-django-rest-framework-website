@@ -28,7 +28,7 @@ class OrderViewSet(viewsets.ModelViewSet):
                 "tickets__journey__train",
             )
         return queryset
-        
+
     def get_serializer_class(self):
         if self.action in ("list", "retrieve"):
             return serializers.OrderListSerializer

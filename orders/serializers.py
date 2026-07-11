@@ -63,6 +63,7 @@ class TicketListSerializer(TicketSerializer):
     """Used for displaying tickets within order details"""
     journey = JourneyListSerializer(read_only=True)
 
+
 class TicketsField(serializers.Field):
     def to_internal_value(self, data):
         if isinstance(data, str):
@@ -77,6 +78,7 @@ class TicketsField(serializers.Field):
 
     def to_representation(self, value):
         return TicketSerializer(value.all(), many=True).data
+
 
 class OrderSerializer(serializers.ModelSerializer):
     # Order is created along with a list of tickets

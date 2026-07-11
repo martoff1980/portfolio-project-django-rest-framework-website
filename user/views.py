@@ -32,6 +32,7 @@ class ManageUserView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user
 
+
 class LoginView(APIView):
     """
     Endpoint for logging in a user and creating a session
@@ -48,7 +49,7 @@ class LoginView(APIView):
             username=serializer.validated_data["email"],
             password=serializer.validated_data["password"],
         )
-        
+
         if user is None:
             return Response(
                 {"detail": "Invalid credentials"},
@@ -56,7 +57,7 @@ class LoginView(APIView):
             )
 
         login(request, user)
-        
+
         return Response(
             {"detail": "Login successful"},
             status=status.HTTP_200_OK,
