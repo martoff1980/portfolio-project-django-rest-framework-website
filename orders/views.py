@@ -28,11 +28,7 @@ class OrderViewSet(viewsets.ModelViewSet):
                 "tickets__journey__train",
             )
         return queryset
-
-    # def get_queryset(self):
-          # Orders are displayed only for the current authenticated user
-    #     return Order.objects.filter(user=self.request.user).prefetch_related("tickets__journey")
-            
+        
     def get_serializer_class(self):
         if self.action in ("list", "retrieve"):
             return serializers.OrderListSerializer
