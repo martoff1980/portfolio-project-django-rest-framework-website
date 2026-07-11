@@ -10,12 +10,11 @@ __pycache__/
 *.py[cod]
 *.pyo
 
-# Виртуальное окружение
 # Virtual environment
 venv/
 .venv/
 
-# База данных (если создаётся отдельно)
+# Date Base (if create)
 db.sqlite3
 
 # User files
